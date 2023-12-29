@@ -1,19 +1,19 @@
 package http
 
-func ResponseWithHTTP(payload any, errorCode *string) HTTPResponse[any] {
+func ResponseWithHTTP[T any | []any | *any](payload T, errorCode *string) HTTPResponse[T] {
 	var errInResponse ErrorInResponse
 	if errorCode != nil {
 		errInResponse = ErrorInResponse{
 			Code: *errorCode,
 		}
 
-		return HTTPResponse[any]{
+		return HTTPResponse[T]{
 			Data:  payload,
 			Error: &errInResponse,
 		}
 	}
 
-	return HTTPResponse[any]{
+	return HTTPResponse[T]{
 		Data: payload,
 	}
 }

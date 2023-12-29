@@ -16,7 +16,7 @@ func main() {
 	})
 
 	app.Get("/ok", func(c *fiber.Ctx) error {
-		return c.JSON(http.ResponseWithHTTP(common.HealthCheck{
+		return c.JSON(http.ResponseWithHTTP[common.HealthCheck](common.HealthCheck{
 			Version:    "0.0.1",
 			ServerTime: time.Now(),
 		}, nil))
@@ -34,12 +34,12 @@ func main() {
 			},
 		}
 
-		return c.JSON(http.ResponseWithHTTP(logs, nil))
+		return c.JSON(http.ResponseWithHTTP[[]common.DummyLog](logs, nil))
 	})
 
 	app.Get("/err", func(c *fiber.Ctx) error {
 		errCode := "RATE_EXCEEDED"
-		return c.JSON(http.ResponseWithHTTP(nil, &errCode))
+		return c.JSON(http.ResponseWithHTTP[*common.DummyLog](nil, &errCode))
 	})
 
 	log.Fatal(app.Listen(":3000"))
