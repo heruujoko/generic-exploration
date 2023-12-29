@@ -39,6 +39,7 @@ func main() {
 
 	app.Get("/err", func(c *fiber.Ctx) error {
 		errCode := "RATE_EXCEEDED"
+		c.Status(429)
 		return c.JSON(http.ResponseWithHTTP[*common.DummyLog](nil, &errCode))
 	})
 
